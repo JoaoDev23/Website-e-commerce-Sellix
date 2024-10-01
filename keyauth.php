@@ -1,12 +1,5 @@
 <?php
-/*
-* KEYAUTH.CC PHP EXAMPLE
-*
-* Edit credentials.php file and enter name & ownerid from https://keyauth.cc/app
-*
-* READ HERE TO LEARN ABOUT KEYAUTH FUNCTIONS https://github.com/KeyAuth/KeyAuth-PHP-Example#keyauthapp-instance-definition
-*
-*/
+
 namespace KeyAuth;
 
 session_start();
