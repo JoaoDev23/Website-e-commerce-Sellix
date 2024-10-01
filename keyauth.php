@@ -1,13 +1,20 @@
 <?php
-
+/*
+* KEYAUTH.CC PHP EXAMPLE
+*
+* Edit credentials.php file and enter name & ownerid from https://keyauth.cc/app
+*
+* READ HERE TO LEARN ABOUT KEYAUTH FUNCTIONS https://github.com/KeyAuth/KeyAuth-PHP-Example#keyauthapp-instance-definition
+*
+*/
 namespace KeyAuth;
 
 session_start();
 
 class api
 {
-    public $name;
-    public $ownerid;
+    public string $name;
+    public string $ownerid;
 
     public function __construct(string $name, string $ownerid)
     {
@@ -21,11 +28,11 @@ class api
             die("Go to <a href=\"https://keyauth.cc/app/\" target=\"blank\">https://keyauth.cc/app/</a> and click the <b>PHP</b> button in the App credentials code. Copy that & paste in <code style=\"background-color: #eee;border-radius: 3px;font-family: courier, monospace;padding: 0 3px;\">credentials.php</code>");
         }
 
-        $data = array(
+        $data = [
             "type" => "init",
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -46,16 +53,16 @@ class api
         }
     }
 
-    function login($username, $password)
+    function login(string $username, string $password)
     {
-        $data = array(
+        $data = [
             "type" => "login",
             "username" => $username,
             "pass" => $password,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -70,9 +77,9 @@ class api
         return $json->success;
     }
 
-    function register($username, $password, $key)
+    function register(string $username, string $password, string $key)
     {
-        $data = array(
+        $data = [
             "type" => "register",
             "username" => $username,
             "pass" => $password,
@@ -80,7 +87,7 @@ class api
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -95,15 +102,15 @@ class api
         return $json->success;
     }
 
-    function license($key)
+    function license(string $key)
     {
-        $data = array(
+        $data = [
             "type" => "license",
             "key" => $key,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -118,16 +125,16 @@ class api
         return $json->success;
     }
 
-    function upgrade($username, $key)
+    function upgrade(string $username, string $key)
     {
-        $data = array(
+        $data = [
             "type" => "upgrade",
             "username" => $username,
             "key" => $key,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -138,20 +145,18 @@ class api
             $this->error($json->message);
         }
 
-        // don't allow them to dashboard yet, upgrade doesn't require password so they need to login after register
-
         return $json->success;
     }
 
-    function var($varid)
+    function var(string $varid)
     {
-        $data = array(
+        $data = [
             "type" => "var",
             "varid" => $varid,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -164,45 +169,45 @@ class api
             return $json->message;
     }
 
-    function log($message)
+    function log(string $message)
     {
         $User = gethostname();
 
-        $data = array(
+        $data = [
             "type" => "log",
             "pcuser" => $User,
             "message" => $message,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $this->req($data);
     }
 
-    function setvar($varname, $data)
+    function setvar(string $varname, string $data)
     {
-        $data = array(
+        $data = [
             "type" => "setvar",
             "var" => $varname,
             "data" => $data,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $this->req($data);
     }
 
-    function getvar($varid)
+    function getvar(string $varid)
     {
-        $data = array(
+        $data = [
             "type" => "getvar",
             "var" => $varid,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -214,9 +219,9 @@ class api
             return $json->response;
     }
 
-    function webhook($webid, $param, $body = "", $conttype = "")
+    function webhook(string $webid, string $param, string $body = "", string $conttype = "")
     {
-        $data = array(
+        $data = [
             "type" => "webhook",
             "webid" => $webid,
             "params" => $param,
@@ -225,7 +230,7 @@ class api
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -238,12 +243,12 @@ class api
     }
 
     function FetchOnline() {
-        $data = array(
+        $data = [
             "type" => "fetchOnline",
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -256,12 +261,12 @@ class api
     }
 
     function checkBlack() {
-        $data = array(
+        $data = [
             "type" => "checkBlack",
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -273,14 +278,14 @@ class api
             return $json->response;
     }
     
-       function Ban($reason){
-        $data = array(
+    function Ban(string $reason) {
+        $data = [
             "type" => "ban",
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid,
             "reason" => $reason
-        );
+        ];
 
         $response = $this->req($data);
         $json = json_decode($response);
@@ -293,14 +298,14 @@ class api
         }
     }
 
-    function ChatGet($channel) {
-        $data = array(
+    function ChatGet(string $channel) {
+        $data = [
             "type" => "chatget",
             "channel" => $channel,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -312,15 +317,15 @@ class api
             return $json->messages;
     }
 
-    function ChatSend($message, $channel) {
-        $data = array(
+    function ChatSend(string $message, string $channel) {
+        $data = [
             "type" => "chatsend",
             "message" => $message,
             "channel" => $channel,
             "sessionid" => $_SESSION['sessionid'],
             "name" => $this->name,
             "ownerid" => $this->ownerid
-        );
+        ];
 
         $response = $this->req($data);
 
@@ -333,7 +338,7 @@ class api
 
     }
 
-    private function req($data)
+    private function req(array $data)
     {
         $curl = curl_init("https://keyauth.win/api/1.2/");
         curl_setopt($curl, CURLOPT_USERAGENT, "KeyAuth");
@@ -352,7 +357,7 @@ class api
         return $response;
     }
 
-    public function error($msg)
+    public function error(string $msg)
     {
         echo '
                 <script type=\'text/javascript\'>
@@ -369,7 +374,7 @@ class api
                 ';
     }
 
-    public function success($msg)
+    public function success(string $msg)
     {
         echo '
                 <script type=\'text/javascript\'>
@@ -386,4 +391,6 @@ class api
                 ';
     }
 }
+
+
 ?>
