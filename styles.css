@@ -34,6 +34,9 @@ header {
     align-items: center;
     flex-wrap: wrap;
     position: relative;
+	z-index: 1000; 
+	position: fixed; 
+    width: 100%; 
 }
 
 .logo {
